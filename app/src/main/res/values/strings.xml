@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">WebViewApp</string>
-    <string name="no_connection">No connection</string>
+    <string name="start">Start browsing</string>
 </resources>

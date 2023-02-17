@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.webapp.databinding.ActivityMainBinding
 
@@ -24,7 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         web = binding.wvMain
-        checkNetworkConnection()
+        binding.wvMain.visibility = View.GONE
+        binding.btnStart.setOnClickListener {
+            checkNetworkConnection()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -33,8 +37,19 @@ class MainActivity : AppCompatActivity() {
 
         connectionState.observe(this) { isConnected ->
             if (isConnected) {
+                binding.apply {
+                    btnStart.visibility = View.GONE
+                    wvMain.visibility = View.VISIBLE
+                }
                 onStartBrowsing()
-            } 
+            } else {
+                binding.apply{
+                    if (wvMain.visibility == View.VISIBLE){
+                        wvMain.visibility = View.GONE
+                        btnStart.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 
